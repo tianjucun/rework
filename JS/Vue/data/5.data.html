@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 模板</title>
+</head>
+<body>
+    <div id="root">
+        <span v-once>[v-once text]: {{text}}</span>
+        <p>text: {{text}}</p>
+        <!-- 当点击更新时，页面会重新渲染，值也会发生改变 -->
+        <p>Math: {{Math.random()}}</p>
+        <p>computed: {{rand}}</p>
+        <div>
+            <button @click="updText">更新</button>
+        </div>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#root",
+            data: {
+                text: "hello world"
+            },
+            created () {
+                this.text = 123123123;
+            },
+            mounted () {
+                this.text = "aaaaa";
+            },
+            methods: {
+                updText () {
+                    this.text = Math.random();
+                }
+            },
+            computed: {
+                rand () { // 只有当绑定的依赖发生改变后才会重新获取
+                    return this.text + "-" + Math.random();
+                }
+            }
+        })
+    </script>
+</body>
+</html>

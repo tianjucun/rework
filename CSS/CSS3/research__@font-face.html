@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学@font-face</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="font/font-awesome.min.css" />
+		<style>
+			.desc {
+				/**
+				 * @font-face
+				 * 	
+				 * 	常见的字体格式
+				 * 		.eot: IE8- 支持
+				 * 		.ttf
+				 * 		.otf
+				 * 		.woff
+				 * 		.woff2
+				 * 
+				 * 	常用字体网站： 
+				 * 		http://fontawesome.dashgame.com/
+				 * 		https://www.iconfont.cn/
+				 * 
+				 */
+			}
+			
+			/*@font-face {
+				font-family: 'Song';
+				src: local('simsun'), url("")
+			}*/
+			
+			@font-face {
+				font-family: 'VS';
+				src: url("font/VeraSeBd.ttf");
+
+			}
+			
+			.font-face-n1 {
+				font-family: VS;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<div class="mr-10">
+					<h4>文本溢出处理</h4>
+					<div class="child font-face-n1">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

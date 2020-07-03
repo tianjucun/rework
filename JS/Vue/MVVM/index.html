@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue MVVM</title>
+</head>
+
+<body>
+  <div id="app">
+    <h3>{{title}}:</h3>
+    <p>name: {{user.name}} - {{user.desc}} </p>
+    <p>school: {{user.scholl.name}}</p>
+    <p>description: <input v-model="user.desc" placeholder="请用一句话描述自己..." /></p>
+  </div>
+  <!-- <script src="../vue/vue.js"></script> -->
+  <script src="./vue.js"></script>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        title: "个人简介",
+        user: {
+          name: "背包男孩",
+          // hobbies: ["打乒乓球", "打篮球", "踢足球"]
+          scholl: {
+            name: "XXX大学"
+          },
+          desc: '我爱中国'
+        }
+      }
+    });
+    setTimeout(function () {
+      vm.opt.data.user.desc = "我爱中国!!!";
+    }, 2000)
+  </script>
+</body>
+
+</html>

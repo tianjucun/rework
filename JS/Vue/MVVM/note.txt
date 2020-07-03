@@ -1,0 +1,55 @@
+1. 给data下的所有属性添加数据拦截(Object.defineProperty) getter setter
+2. 对el下的DOM进行深度遍历, 对每一个Node节点解析模板解析(compile mustache)
+3. 在el的DOM遍历过程中(模板编译过程中), 将带有mustache的节点进行订阅, 注册到观察者中心
+4. 需要注意的是: 每一个属性都会有一个独立的观察者(在数据发生set的时候进行触发更新视图)
+5. 独立的观察者存在的条件就是闭包, 作为getter和setter下可访问的临时变量
+
+// *: 某个模式出现0次或多次,等同于{0, }
+// \s: 匹配空格(包括换行符, 制表符, 空格符等) 相当于[\t\r\n\v\f]
+const mustacheReg = new RegExp('\\{\\{\\s*' + key + '\\s*\\}\\}', 'gm');
+child.innerHTML = child.innerHTML.replace(mustacheReg, this.opt.data[key])
+
+
+初始化流程
+
+创建Vue实例对象
+init过程会初始化生命周期，初始化事件中心，初始化渲染、执行beforeCreate周期函数、初始化 data、props、computed、watcher、执行created周期函数等。
+初始化后，调用$mount方法对Vue实例进行挂载（挂载的核心过程包括模板编译、渲染以及更新三个过程）。
+如果没有在Vue实例上定义render方法而是定义了template，那么需要经历编译阶段。需要先将template 字符串编译成 render function，template 字符串编译步骤如下 ：
+
+parse正则解析template字符串形成AST（抽象语法树，是源代码的抽象语法结构的树状表现形式）
+optimize标记静态节点跳过diff算法（diff算法是逐层进行比对，只有同层级的节点进行比对，因此时间的复杂度只有O(n)。如果对于时间复杂度不是很清晰的，可以查看我写的文章ziyi2/algorithms-javascript/渐进记号）
+generate将AST转化成render function字符串
+
+编译成render function 后，调用$mount的mountComponent方法，先执行beforeMount钩子函数，然后核心是实例化一个渲染Watcher，在它的回调函数（初始化的时候执行，以及组件实例中监测到数据发生变化时执行）中调用updateComponent方法（此方法调用render方法生成虚拟Node，最终调用update方法更新DOM）。
+调用render方法将render function渲染成虚拟的Node（真正的 DOM 元素是非常庞大的，因为浏览器的标准就把 DOM 设计的非常复杂。如果频繁的去做 DOM 更新，会产生一定的性能问题，而 Virtual DOM 就是用一个原生的 JavaScript 对象去描述一个 DOM 节点，所以它比创建一个 DOM 的代价要小很多，而且修改属性也很轻松，还可以做到跨平台兼容），render方法的第一个参数是createElement(或者说是h函数)，这个在官方文档也有说明。
+生成虚拟DOM树后，需要将虚拟DOM树转化成真实的DOM节点，此时需要调用update方法，update方法又会调用pacth方法把虚拟DOM转换成真正的DOM节点。需要注意在图中忽略了新建真实DOM的情况（如果没有旧的虚拟Node，那么可以直接通过createElm创建真实DOM节点），这里重点分析在已有虚拟Node的情况下，会通过sameVnode判断当前需要更新的Node节点是否和旧的Node节点相同（例如我们设置的key属性发生了变化，那么节点显然不同），如果节点不同那么将旧节点采用新节点替换即可，如果相同且存在子节点，需要调用patchVNode方法执行diff算法更新DOM，从而提升DOM操作的性能。
+
+
+响应式流程
+
+在init的时候会利用Object.defineProperty方法（不兼容IE8）监听Vue实例的响应式数据的变化从而实现数据劫持能力（利用了JavaScript对象的访问器属性get和set，在未来的Vue3中会使用ES6的Proxy来优化响应式原理）。在初始化流程中的编译阶段，当render function被渲染的时候，会读取Vue实例中和视图相关的响应式数据，此时会触发getter函数进行依赖收集（将观察者Watcher对象存放到当前闭包的订阅者Dep的subs中），此时的数据劫持功能和观察者模式就实现了一个MVVM模式中的Binder，之后就是正常的渲染和更新流程。
+当数据发生变化或者视图导致的数据发生了变化时，会触发数据劫持的setter函数，setter会通知初始化依赖收集中的Dep中的和视图相应的Watcher，告知需要重新渲染视图，Wather就会再次通过update方法来更新视图。
+
+
+
+
+
+
+
+obj: {
+  a: "", // 比例设置
+  b: "", // 手续设置
+  ...,
+  c: [
+    { c_a: "",// 超过多少分钟 c_b: "", // 扣除多少手续费 },
+    { c_a: "",// 超过多少分钟 c_b: "", // 扣除多少手续费 },
+    { c_a: "",// 超过多少分钟 c_b: "", // 扣除多少手续费 },
+  ],
+  maxD: "", // 最多扣除
+  labelArr: [
+    {key: "", value: "" },
+    {key: "", value: "" },
+    {key: "", value: "" }
+  ]
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>深入理解包含块</title>
+		<style>
+			.box {
+				width: 50%;
+				height: 300px;
+				background-color: #CCCCCC;
+			}
+			.box > .child {
+				position: fixed;
+				width: 100%;
+				background-color: #00FFFF;
+				display: none; /** 先隐藏 **/
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	在 CSS2.1 中，很多框的定位和尺寸的计算，都取决于一个矩形的边界，这个矩形，被称作是包含块( containing block )。
+       		position为static或relative，包含块为块、单元格、行内块祖先元素的content-box
+       		position为fixed，包含块为初识包含块。
+       		position为absolute时：
+       			一般情况下： 包含块为position为relative、absolute、fixed祖先元素的padding-box
+       			如果祖先元素为纯行内元素(inline)
+       			那么分两种情况： 
+       			如果direction属性为ltr，则从第一个框的左上到最后一个框的右下框起来的区域
+        		如果direction属性为rtl，则总第一个框的右上到最后一个框的做下框起来的区域
+        		这里的框值em框
+        	参考链接：http://w3help.org/zh-cn/kb/008/
+        -->
+		<!--
+        	根元素
+        	根元素的存在的包含块,被叫做初识包含块。
+        	在HTML元素中,根元素是HTML元素；
+        	初始包含块的direction属性与根元素相同。
+        -->
+
+		<!--
+        	静态定位元素与相对定位元素
+        	它的包含块是：最近的块级元素、单元格元素(table cell)、行内块（inline-block）祖先元素的内容框创建。
+        	#grred 的 包含块是由 #div1的内容边界组成；
+        	#div1 的包含块是 #td1
+        	#td1 的包含块是 #table1
+        	#table1 的包含块是 body
+        -->
+		<h3>静态定位元素与相对定位元素</h3>
+		<table id="table1">
+			<tr>
+				<td id="td1">
+					<div id="div1" style="padding:20px;border:1px solid red;">
+						<span>
+                   			<strong id=”greed” style="position:relative;">greed is</strong>
+                   			good 999999
+             		 </span>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<!--
+        	固定定位元素
+			包含块为初识包含块
+        -->
+        <h3>固定定位元素</h3>
+        <div class="box">
+        	父级元素
+        	<div class="child">我是固定定位元素</div>
+        </div>
+        <!--
+        	绝对定位元素
+        	包含块为最近的position属性为absolute、relative、fixed的祖先元素(padding-box)创建
+        -->
+        <h3>绝对定位元素</h3>
+        <h4>如果其祖先元素是行内元素,则包含块取决于其祖先元素的direction属性</h4>
+       	<h5>包含块为: 包含块元素生成的第一个框的顶、左内边距边距到右、下内边距边界</h5>
+       <p style="border:1px solid red; width:200px; padding:20px;">
+		    <span style="background-color:#C0C0C0; position:relative;">
+		            这段文字从左向右排列，红 XX 和 蓝 XX 和黄 XX 都是绝对定位元素，它的包含块是相对定位的SPAN。 可以通过它们绝对定位的位置来判断它们包含块的边缘。
+		            <em style="position:absolute; color:red; top:0; left:0;">XX</em>
+		            <em style="position:absolute; color:yellow; top:20px; left:0;">XX</em>
+		            <em style="position:absolute; color:blue; bottom:0; right:0;">XX</em>
+		    </span>
+		</p>
+        <h4>如果其祖先元素是行内元素,则包含块取决于其祖先元素的direction属性, direction 属性为 rtl</h4>
+        <h5>包含块为： 包含块元素生成的第一个框的顶、右内边距边界到左后一个框的左、下内边距边界</h5>
+        <p style="border:1px solid red; width:200px; padding:20px;direction: rtl;">
+		    <span style="background-color:#C0C0C0; position:relative;">
+		            这段文字从左向右排列，红 XX 和 蓝 XX 和黄 XX 都是绝对定位元素，它的包含块是相对定位的SPAN。 可以通过它们绝对定位的位置来判断它们包含块的边缘。
+		            <em style="position:absolute; color:red; top:0; left:0;">XX</em>
+		            <em style="position:absolute; color:yellow; top:20px; left:0;">XX</em>
+		            <em style="position:absolute; color:blue; bottom:0; right:0;">XX</em>
+		    </span>
+		</p>
+        <h4>其他情况下,如果祖先元素不是行内元素，那么包含块的区域应该是祖先元素的内边距边界</h4>
+        <div id="container" style="padding:50px; background-color:#c0c0c0; position:relative; width:200px; height:200px;">
+		    <div id="div1" style="width:100%; height:100%; border:2px solid blue;">
+		        <div id="content" style="border:1px solid red; position:absolute; left:0; top:0;">absolute element</div>
+		    </div>
+		</div>
+	</body>
+
+</html>

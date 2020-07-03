@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学transition</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.desc {
+				
+				/**
+				 * 文本溢出
+				 * 	
+				 * 
+				 */
+				
+			}
+			
+			.transition_transition-property {
+				transition: background-color,border .5s,.3s ease-in,ease-in-out .1s;
+			}
+			.transition_transition-property:hover {
+				border-radius: 50%;
+				background-color: #00FFFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<div class="mr-10">
+					<h4>过渡属性 transition-property</h4>
+					<div class="child transition_transition-property"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

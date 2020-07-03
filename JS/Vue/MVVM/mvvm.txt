@@ -1,0 +1,7 @@
+1. 关于对数组实现数据拦截
+
+  核心实现: 重写原型链上的数组操作方法(函数劫持)
+
+  push, pop, shift, unshift, reverse, sort, splice
+
+  在Observer时的构造时添加 '__ob__' => this

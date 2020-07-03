@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>高级布局-等分布局</title>
+		<style>
+			.container {
+				width: 50%;
+				margin: 0 auto;
+			}
+			
+			.box {
+				overflow: hidden;
+			}
+			.box > .wrapper {
+				overflow: hidden;
+				margin-left: -20px;
+			}
+			.box > .wrapper > .item {
+				float: left;
+				width: 33.333%;
+				padding-left: 20px;
+				box-sizing: border-box;
+				/** 不显示padding-box区域 **/
+				background-clip: content-box; 
+				background-color: #00FFFF;
+			}
+			
+			.box2 {
+				overflow: hidden;
+			}
+			.box2 > .wrapper {
+				overflow: hidden;
+				margin-left: -20px;
+			}
+			.box2 > .wrapper > .item {
+				float: left;
+				width: calc(33.3% - 20px);
+				margin-left: 20px;
+				background-color: #00FFFF;
+			}
+			
+			.box3 {
+				overflow: hidden;
+			}
+			.box3 > .wrapper {
+				overflow: hidden;
+				/** ????? **/
+				margin-right: -20px;
+			}
+			.box3 > .wrapper .item-wrapper {
+				float: left;
+				width: 33.3%;
+			}	
+			.box3 > .wrapper .item-wrapper .item {
+				/** ????? **/
+				margin-right: 20px;
+				height: 21px;
+				background-color: #00FFFF;
+			} 	
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<!--
+            	通过 float + padding + background-clip
+            	缺点:结构和样式存在耦合性，IE7-浏览器下对宽度百分比取值存在四舍五入的误差
+            -->
+            <h3>通过float + padding + background-clip</h3>
+			<div class="box">
+				<div class="wrapper">
+					<div class="item">item1</div>
+					<div class="item">item2</div>
+					<div class="item">item3</div>
+				</div>
+			</div>
+			<!--
+            	通过float + margin + calc
+            	虽然是通过calc,但是当等分量明确的时候,可以手动算出。
+            	重要的点在于： 负margin的作用可以扩大wrapper的宽度
+            -->
+			<h3>通过float + margin + calc</h3>
+			<div class="box2">
+				<div class="wrapper">
+					<div class="item">item1</div>
+					<div class="item">item2</div>
+					<div class="item">item3</div>
+				</div>
+			</div>
+			
+			<h3>通过float + margin +fix</h3>
+			<div class="box3">
+				<div class="wrapper">
+					<div class="item-wrapper">
+						<div class="item">
+							item1
+						</div>
+					</div>
+					<div class="item-wrapper">
+						<div class="item">
+							item2
+						</div>
+					</div>
+					<div class="item-wrapper">
+						<div class="item">
+							item3
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<h3></h3>
+			
+		</div>
+	</body>
+
+</html>

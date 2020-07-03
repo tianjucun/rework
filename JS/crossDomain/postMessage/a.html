@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A页面</title>
+</head>
+<body>
+    <h1>A</h1>
+    <iframe src="http://localhost:8083/b.html" id="iframe" onload="load()"></iframe>
+</body>
+<script>
+    /**
+     *  window.postMessage 主要用于非同源的两个页面间的通信
+     * 
+     */
+    function load() {
+        let iframe = document.getElementById("iframe");
+        // 获取B页面的window对象
+        let pageBWindow = iframe.contentWindow;
+        const pageBOrigin = "http://localhost:8083";        
+        pageBWindow.postMessage("foo", pageBOrigin);
+        window.onmessage = function(e) {
+            console.log("from B page: ", e.data);
+        }
+    }   
+</script>
+</html>

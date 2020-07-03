@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 生命周期</title>
+</head>
+<body>
+    <div id="root">
+        {{text}}
+        <button @click="updKey">random</button>
+        <button @click="destroy">destroy</button>
+        <p ref="domKey">{{key}}</p>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#root",
+            data: {
+                text: "hello world",
+                key: ""
+            },
+            beforeCreate () { // 初始化事件和生周期后会执行: 没有挂载数据,只是个空壳子
+                console.log("beforeCreated: ", this.$data);
+                console.log(Object.keys(this));
+                // console.log(Object.keys(this), this.$root.style.color="red");
+            },
+            created () { // 挂载数据, 绑定事件后执行：可以使用数据和更改数据, 但更改不会触发beforeUpdate和updated钩子函数
+                console.log("created: ", this.$data);
+                console.log(Object.keys(this));
+            },
+            beforeMount () { // 找实例或者组件对应的模板，[编译模板为虚拟dom]放入到render函数中：执行该函数
+                console.log("beforeMount: ", this.$data);
+                console.log(Object.keys(this));
+                console.log(this.$el);  // <div id="root">{{text}}</div>          
+            },
+            mounted () { // render && 渲染出真实DOM以后会执行: 可以操作真实DOM，修改数据会触发beforeUpdate
+                // mounted 不会保证所有的子组件也都一起被挂载。
+                // 如果你希望等到整个视图都渲染完毕，可以在 mounted 内部使用 vm.$nextTick：
+                console.log("mounted: ", this.$data);
+                console.log(Object.keys(this));
+                console.log(this.$el); // <div id="root" style="color: blue;">hello world</div>
+                this.$el.style.color="blue";
+            },
+            beforeUpdate () { // 组件或实例的数据更改之后触发，在此函数可以访问和操作更新之前的DOM
+                let key = this.key;
+                console.log("beforeUpdate: ", key);
+                console.log("beforeUpdate innerText: ", this.$refs.domKey.innerText);
+                this.$refs.domKey.style.fontSize = "100px";
+            },
+            updated () { // 通过diff算法比对两次不同的虚拟DOM，对比之后重新渲染
+                console.log("updated: ", this.$data.key);
+                console.log("updated innerText: ", this.$refs.domKey.innerText);
+            },
+            beforeDestroy () { // 实例销毁之前调用:可以做一些善后工作, 比如清楚定时器，销毁全局对象，清除全局指令等等。
+                console.log("beforeDestroy: ", this.$data);
+                console.log(Object.keys(this));
+                this.$refs.domKey.style.fontSize = "50px";
+                this.text = 12341231;
+            },
+            destroyed () { // 实例销毁之后调用
+                // 调用之后，对应 Vue 实例的所有指令都被解绑，所有的事件监听器被移除，所有的子实例也都被销毁。
+                console.log("destroyed: ", this.$data);
+                console.log(Object.keys(this));
+                this.updKey();
+                console.log(this.$refs); // {domKey: undefined}
+                console.log(this.$options);
+                console.log(this.$el);
+            },
+            methods: {
+                updKey () {
+                    this.key = Math.floor(Math.random() * 10);
+                },
+                destroy () {
+                    console.log("触发销毁实例!!!");
+                    this.$destroy();
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <div id="baseexample">
+            <p>Scroll down the page</p>
+            <p v-pin:[direction]="200">Stick me 200px from the top of the page</p>
+            <p v-pin:top="200">Stick me 200px from the top of the page</p>
+            <p v-pin:right="200">Stick me 200px from the top of the page</p>
+          </div>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#root",
+            data: {
+                direction: 'left'
+            },
+            directives: {
+                pin: {
+                    bind (el, binding, value) {
+                        el.style.position = 'fixed';
+                        el.style[binding.arg] = binding.value + 'px';
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

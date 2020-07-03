@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jsonp 实现跨域</title>
+</head>
+
+<body>
+    <h1>Jsonp 实现跨域</h1>
+</body>
+<script src="./jsonp.js"></script>
+<script>
+    // 缺点：只支持 get 不支持 post, put delete
+    // 不安全，XSS 攻击 ，返回的结果不能保证安全性
+    jsonp({
+        url: 'http://localhost:8081/index',
+        params: {
+            name: "张三"
+        },
+        cb: "show"
+    }).then(data => {
+        console.log("jsonp: ", data);
+    }, reason => console.log("reason:" , reason))
+</script>
+</html>

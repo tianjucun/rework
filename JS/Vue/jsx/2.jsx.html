@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 作用域插槽</title>
+</head>
+<body>
+    <div id="root">
+        <list-comp :list="items" v-slot="{item, index}">
+            <!-- 普通插槽是在父组件中执行 -->
+            <!-- 作用域插槽是在子组件中执行 -->
+            <h1 :key="index">{{item}}</h1>    
+        </list-comp :list="items">
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        const ListComp = {
+            props: {
+                list: Array
+            },
+            template: `
+                        <div>
+                            <template v-for="(item, index) in list">
+                                <slot :item="item" :index="index"></slot>
+                            </template>
+                        </div>
+
+                        `
+        };
+        new Vue({
+            el: "#root",
+            data: {
+                items: ["苹果", "梨", "香蕉"]
+            },
+            components: {
+                ListComp
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学border-shadow</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.box-shadow-n1 {
+				/**
+				 * 按照水平流(默认是从左向右的流向)X轴偏移
+				 * 按照垂直流(默认是从上往下的流向)Y轴偏移
+				 * 	0是中心点：可以大概理解为当前元素的中垂点
+				 * 	小于0： 相对中心点X轴向左偏移，Y轴向上偏移
+				 * 	大于0： 相对中心店X轴向右偏移，Y轴向下偏移
+				 *  
+				 * 	blur： 模糊距离，相对于元素盒子边缘，内外各占一半，eg：10px 向外模糊5px，向内模糊5px
+				 *  spread：阴影扩散半径：可以简单理解为原来的增加了边框的对应厚度,为负值时表现为收缩
+				 * 
+				 * 
+				 * 	inset： 相对边框来说：向内扩展
+				 *  outset： 相对边框来说：想外扩展
+				 * 
+				 * 多个阴影通过逗号隔开
+				 * 
+				 * */
+				box-shadow: 10px 10px 5px;
+			}
+			.box-shadow-n2 { /* 单侧投影: 关键在于XY轴之间的偏移计算*/
+				/*下侧*/
+				box-shadow:  0 5px 4px -4px; 
+				/*上侧*/
+				box-shadow:  0 -5px 4px -4px;
+				/*左侧*/
+				box-shadow: -5px 0 4px -4px;
+				/*右侧*/
+				box-shadow:  5px 0 4px -4px;
+			}
+			.box-shadow-n3 { /*实现领边投影*/
+				/*上左*/
+				box-shadow: -5px -5px 4px -4px;
+				/*上右*/
+				box-shadow: 5px -5px 4px -4px;
+				/*下左*/
+				box-shadow: -5px 5px 4px -4px;
+				/*下右*/
+				box-shadow: 5px 5px 4px -4px;
+			}
+			.box-shadow-n4 { /*实现两侧投影:通过两个投影实现*/
+				/*上(红)下(黑)*/
+				box-shadow: 0 -5px 4px -4px #FF0000,0 5px 4px -4px;
+				/*左右*/
+				box-shadow: -5px 0 4px -4px,5px 0 4px -4px;			
+			}
+			.box-shadow-n5 { /*实现三边投影：相邻两边+单边投影*/
+				/*上左右*/
+				box-shadow: -5px -5px 4px -4px,5px -5px 4px -4px ;
+			}
+			.box-shadow-n6 { /*实现内侧投影*/
+				/*从上向下偏移一半*/
+				box-shadow: inset 0 50px 4px -4px;
+				/*从下向上偏移一半*/
+				box-shadow: inset 0 -50px 4px -4px;
+				/*从左向右偏移一半*/
+				box-shadow: inset 50px 0 4px -4px;
+				/*从右向左偏移一半*/
+				box-shadow: inset -50px 0 4px -4px;
+				/*上左各偏移一半*/
+				box-shadow: inset 50px 50px 4px -4px;
+				/*上下各偏移一半*/
+				box-shadow: inset 0 50px 4px -4px #FF0000,inset 0 -50px 4px -4px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<div class="mr-10">
+					<h4>绘制简单阴影</h4>
+					<div class="child box-shadow-n1"></div>
+				</div>
+				<div class="mr-10">
+					<h4>单侧投影</h4>
+					<div class="child box-shadow-n2"></div>
+				</div>
+				<div class="mr-10">
+					<h4>领边投影</h4>
+					<div class="child box-shadow-n3"></div>
+				</div>
+				<div class="mr-10">
+					<h4>两侧投影</h4>
+					<div class="child box-shadow-n4"></div>
+				</div>
+				<div class="mr-10">
+					<h4>任意三边投影</h4>
+					<div class="child box-shadow-n5"></div>
+				</div>
+				<div class="mr-10">
+					<h4>内侧投影</h4>
+					<div class="child box-shadow-n6"></div>
+				</div>
+			</div>	
+		</div>
+	</body>
+</html>

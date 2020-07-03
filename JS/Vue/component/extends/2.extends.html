@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <child-one :age="14"></child-one>
+    </div>
+    <script src="../../vue/vue.js"></script>
+    <!--
+        当需要使用一个公用组件时，不想修改其逻辑，可以通过extends方法进行集成。
+        对于 props的具体属性的设置 会进行覆盖；
+        对于 生命周期函数会进行 依次调用(父（beforeCreat）,子（beforeCreat） => 父（created）,子（created） => ...)
+        对于 template 会进行覆盖
+    1-->
+    <script>
+        const BaseComp = {
+            props: {
+                age: Number
+            },
+            data () {
+                return {
+                    text: "123"
+                }
+            },
+            created () {
+                console.log("[BaseComp instance]: created");
+            },
+            mounted () {
+                console.log("[BaseComp instance]: mounted");
+            },
+            template: `
+                    <div>
+                        <span>{{age}}</span>
+                        <p>{{text}}</p>
+                    </div>    
+                    `
+        };
+        const ChildOne = {
+            extends: BaseComp,
+            props: {},
+            data () {
+                return {
+                    text: "456"
+                }
+            },
+            mounted () {
+                console.log(this.$parent.$options.name); // $parent 就是组件的调用方而非extends的指向
+            }
+        }
+        new Vue({
+            name: "Root",
+            el: "#root",
+            data: {
+                
+            },
+            components: {
+                ChildOne
+            }
+        })
+    </script>
+</body>
+</html>

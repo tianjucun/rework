@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Watch</title>
+</head>
+<body>
+    <div id="root">
+        <input v-model="g"/>
+        <p>a.b: {{a.b}}</p>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#root",
+            data: {
+                g: "g",
+                a: {
+                    b: "b",
+                    c: "c",
+                    d: {
+                      e: "e",
+                      f: [0, 1, 2]
+                    }
+                }
+            },
+            watch: {
+                g (val, oldVal) { // 监听单个属性
+                    console.log("val", val, "\r\n", "oldVal", oldVal);
+                    this.a.b = "b1";
+                },
+                ["a.b"] (val, oldVal) { // 监听对象下的具体属性
+                    console.log("val", val, "\r\n", "oldVal", oldVal);
+                    this.a.d.e = "e1";
+                    this.a.d.f[2] = 3;
+                },
+                ["a.d"]: { // 递归监听a.d下所有的子孙属性
+                    handler (val, oldVal) { // 要注意的是, 只要a.d的引用没有发生改变, val 就等于 oldVal
+                        console.log("val", val, "\r\n", "oldVal", oldVal);
+                    },
+                    deep: true,
+                    immediate: true // 初始化侦听器时就会执行, oldVal => undefined
+                }
+            }
+        });
+    </script>
+</body>
+</html>

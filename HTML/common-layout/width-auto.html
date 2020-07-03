@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>两侧定宽中间自适应</title>
+		<style>
+			.container {
+				width: 50%;
+				margin: 0 auto;
+			}
+			
+			.box::after {
+				content: '';
+				display: table;
+				clear: both;
+			}
+			
+			.box {
+				overflow: hidden;
+				zoom: 1;
+			}
+			
+			.left {
+				background-color: #ff0000;
+			}
+			
+			.center {
+				background-color: #008000;
+			}
+			
+			.right {
+				background-color: #0000ff;
+			}
+			
+			.box>.left,
+			.box>.right {
+				width: 100px;
+				float: left;
+			}
+			
+			.box>.center {
+				float: left;
+				width: calc(100% - 240px);
+				margin: 0 20px;
+				/*margin: 0 120px;*/
+			}
+			/** float + 负margin + fix  **/
+			
+			.box2 {
+				overflow: hidden;
+				zoom: 1;
+			}
+			
+			.box2>div {
+				float: left;
+			}
+			
+			.box2>.left {
+				position: relative;
+			}
+			
+			.box2>.left,
+			.box2>.right {
+				width: 100px;
+			}
+			
+			.box2>.center-wrapper {
+				width: 100%;
+				margin: 0 -100px;
+			}
+			
+			.box2>.center-wrapper>.center {
+				margin: 0 120px;
+			}
+			/** inline-block + margin + calc **/
+			
+			.box3 {
+				font-size: 0;
+			}
+			
+			.box3>h3 {
+				font-size: calc(1.17 * 16px);
+			}
+			
+			.box3>div {
+				font-size: 16px;
+				display: inline-block;
+				width: 100px;
+				vertical-align: top;
+				word-break: break-all;
+			}
+			
+			.box3>.center {
+				width: calc(100% - 240px);
+				margin: 0 20px;
+			}
+			/** inline-bock + 负margin + fix **/
+			
+			.box4 {
+				font-size: 0px;
+			}
+			
+			.box4>h3 {
+				font-size: calc(1.17 * 16px);
+			}
+			
+			.box4>div {
+				display: inline-block;
+				width: 100px;
+				vertical-align: top;
+				font-size: 16px;
+			}
+			
+			.box4>.left {
+				position: relative;
+			}
+			
+			.box4>.center-wrapper {
+				width: 100%;
+				margin: 0 -100px;
+				/* 让center元素跟 left和right同行显示 */
+			}
+			
+			.box4>.center-wrapper>.center {
+				margin: 0 120px;
+			}
+			
+			/** table **/
+			.box5 {
+				display: table;
+				width: 100%;
+				table-layout: fixed;
+			}	
+			.box5 > .left,
+			.box5 > .right {
+				width: 100px;
+			}
+			.box5 > div {
+				display: table-cell;
+			}
+			.box5 > .center-wrapper > .center {
+				margin: 0 20px;
+			}
+			/** absolue **/
+			.box6 {
+				position: relative;
+				height: 150px;
+			}
+			.box6 > div {
+				position: absolute;
+			}
+			.box6 > .left,
+			.box6 > .right {
+				width: 100px;
+			}
+			.box6 > .left {
+				left: 0;
+			}
+			.box6 > .center {
+				left: 120px;
+				right: 120px;
+			}
+			.box6 > .right {
+				right: 0;
+			}
+			/** flex **/
+			.box7 {
+				display: flex;
+			}
+			.box7 > .left,.box7 > .right {
+				width: 100px;
+			}
+			.box7 > .center {
+				flex: 1;
+				margin: 0 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<!--
+        	布局流:
+        	float margin calc
+        	inline-block
+        	absolute
+        	table
+        	flex
+        	
+        	动态成行布局：
+        	单列定宽
+        	两列自适应
+        	两侧定宽中间自适应
+        	两侧自适应中间定宽
+        	两列定宽一侧自适应
+      -->
+		
+		<!--
+        	float + margin + calc
+        -->
+		<div class="container">
+			<div class="box">
+				<h3>float + margin + calc</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center">
+					<p>
+						centercentercentercentercentercentercentercenter centercentercentercentercentercentercentercenter centercentercentercentercentercentercentercenter
+					</p>
+				</div>
+				<div class="right">
+					<p>right</p>
+				</div>
+			</div>
+
+			<!--
+            	float + 负margin + fix
+            -->
+			<div class="box2">
+				<h3>float + 负margin + fix</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center-wrapper">
+					<div class="center">
+						<p>
+							centercentercentercentercentercentercentercenter centercentercentercentercentercentercentercenter centercentercentercentercentercentercentercenter
+						</p>
+					</div>
+				</div>
+
+				<div class="right">
+					<p>right</p>
+				</div>
+			</div>
+
+			<!--
+            	inline-block + margin + calc
+            -->
+			<div class="box3">
+				<h3>inline-block + margin + calc</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center">
+					<p>
+						centercentercentercentercentercentercentercenter centercentercentercentercentercentercentercentercenter centercentercentercentercentercenter
+					</p>
+				</div>
+				<div class="right">
+					<p>right</p>
+				</div>
+			</div>
+
+			<!-- 
+				inline-block + 负margin + fix
+			-->
+			<div class="box4">
+				<h3>inline-block + 负margin + fix</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center-wrapper">
+					<div class="center">
+						<p>
+							centercentercentercentercentercentercentercentercenter centercentercentercentercentercentercentercentercenter centercentercentercenter
+						</p>
+					</div>
+				</div>
+
+				<div class="right">
+					<p>right</p>
+				</div>
+			</div>
+
+			<!--
+				table + layout + fixed
+				table-cell 之间无法设置margin距
+			-->
+			<h3>table + table-layout</h3>
+			<div class="box5">
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center-wrapper">
+					<div class="center">
+						<p>
+							centercentercentercentercentercentercentercenter centercentercentercentercentercentercentercenter centercentercentercentercentercentercentercenter
+						</p>
+					</div>
+				</div>
+
+				<div class="right">
+					<p>right</p>
+				</div>
+			</div>
+			
+			<!--
+            	absolute
+            -->
+			<div class="box6">
+				<h3>absolute</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center">
+					<p>
+						centercentercentercentercentercentercenter
+						centercentercentercentercentercentercenter
+						centercentercentercentercentercentercenter
+					</p>
+				</div>
+				<div class="right">
+					<p>right</p>
+				</div>
+			</div>
+			
+			<!--
+            	flex
+            -->
+            <h3>flex</h3>
+            <div class="box7">
+            	<div class="left">
+            		<p>left</p>
+            	</div>
+            	<div class="center">
+            		<p>
+            			centercentercentercentercentercentercentercentercenter
+            			centercentercentercentercentercentercentercentercenter
+            			centercentercentercentercentercentercentercentercenter
+            		</p>
+            	</div>
+            	<div class="right">
+            		<p>right</p>
+            	</div>
+            </div>
+		</div>
+	</body>
+
+</html>

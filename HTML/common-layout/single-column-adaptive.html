@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>单列定宽布局</title>
+		<style></style>
+		<style>
+			p {
+				margin: 0;
+			}
+			.wrapper {
+				width: 50%;
+				margin: 20px auto;
+				text-align: center;
+			}
+			.wrapper > .container {
+				padding-left: 20px;
+				padding-bottom: 20px;
+				border: solid 1px #ccc;
+				margin-top: 20px;
+				text-align: left;
+			}
+			.container >  div[class^="box-"] {
+				padding-bottom: 10px;
+				border-bottom: dashed 1px #ccc;
+			}
+			.text-overflow {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			.overflow {
+				overflow: hidden;	
+				zoom: 1;	
+			}
+			.inline-block {
+				display: inline-block;
+				*display: inline;
+				zoom: 1;
+			}
+			.container >  div[class^="box-"] > .left {
+				width: 100px;
+				background-color: #CCCCCC;
+			}
+			.box-float {
+				
+			}
+			.box-float > .left {
+				float: left;
+				
+			}
+			.box-float > .right {
+				margin-left: 120px;
+			}
+			
+			.box-float > .right-wrapper {
+				width: 100%;
+				float: left;
+				margin-left: -100px;
+			}
+			.right-wrapper > .right {
+				margin-left: 120px;
+			}
+			.box-float > .float-calc {
+				float: left;
+				width: calc(100% - 120px);
+				margin-left: 20px;
+			}
+			
+			.box-inline-block {
+				font-size: 0;
+			}
+			.box-inline-block > .left {
+				vertical-align: top;
+				font-size: 16px;
+				margin-right: 20px;
+			}
+			.box-inline-block > .right {
+				vertical-align: top;
+				font-size: 16px;
+				width: calc(100% - 120px);
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div class="wrapper">
+			展示区(实现单列定宽布局)
+			<div class="container">
+				<!-- 
+					第一种方式：通过float
+				 	float: 会让后面的元素发生文字环绕现象
+				 	clear: 元素盒子的边不能和前面的浮动元素相邻,但是后面的元素依旧可能会发生文字环绕现象。
+				 -->
+				<h4>通过float</h4>
+				<div class="box-float overflow">
+					<div class="left">兴趣爱好:</div>
+					<div class="right">
+						<p>打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球</p>
+					</div>
+				</div>
+				<!--
+                	第二种方式,通过float + margin + (fix)
+                	通过增加结构的方式
+                	这样做的好处，不管right-wrapper中的元素再怎么变化，都不影响外边的元素(.left)
+               		因为只要float不为none会触发BFC
+                -->	
+                <h4>通过float + margin + (fix)</h4>
+				<div class="box-float overflow">
+					<div class="left">兴趣爱好:</div>
+					<div class="right-wrapper">
+						<div class="right">
+							<p>打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球</p>
+						</div>
+					</div>
+				</div>
+				<!--
+                	第三种方式，通过float + calc
+                -->
+                <h4>通过float + calc</h4>
+				<div class="box-float overflow">
+					<div class="left">兴趣爱好:</div>
+					<div class="right float-calc">
+						<p>打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球</p>
+					</div>
+				</div>
+				<!--
+                	第四种方式，通过float + BFC(overflow)
+                -->
+                <h4>通过float + BFC(overflow)</h4>
+                <div class="box-float overflow">
+                	<div class="left">兴趣爱好:</div>
+                	<div class="right overflow">
+                		<p>打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球</p>
+                	</div>
+                </div>
+                
+                <!--
+                	第五种方式：通过inline-block + margin + calc
+                -->
+				<h4>通过inline-block + margin + calc</h4>
+				<div class="box-inline-block">
+					<div class="left inline-block">兴趣爱好:</div>
+					<div class="right inline-block">
+						<p>打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球,打篮球,踢足球</p>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</body>
+</html>

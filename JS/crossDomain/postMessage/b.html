@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>B页面</title>
+</head>
+<body>
+    <h1>B</h1>
+</body>
+<script>
+    window.onmessage = function(e) { // 为了保证安全性, 验证信息来源,以及信息内容
+        let {data, origin, source} = e;
+        console.log("from A page:", data);
+        if(origin !== "http://localhost:8082") return;
+        if(data === "foo") {
+            source.postMessage("I am bar", origin);
+        } else {
+            console.log("data:", data);
+        }
+        
+    }
+</script>
+</html>

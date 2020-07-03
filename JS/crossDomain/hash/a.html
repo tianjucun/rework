@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>A</h1>
+    <iframe src="http://localhost:8083/c.html#foo" id="iframe"></iframe>
+</body>
+<script>
+    /**
+     *  A页面和跨域页面C进行hash通信
+     *  
+     *  A页面通过iframe将C页面嵌套进来; 
+     *  C页面将与A页面同域的B页面动态通过iframe嵌套进来,并传hash给B页面; 
+     *  B页面通过层层(parent)查找到A, 然后将其hash赋给A页面；
+     *  A页面通过监听hash的变化实现与C页面的通信
+     * 
+     */ 
+    window.onhashchange = function(){
+        console.log("get hash: ",window.location.hash);
+    }
+</script>
+</html>

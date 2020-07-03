@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学text-shadow</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			* {
+				font-family: simsun;
+			}
+			.text-shadow-n1 {
+				/**
+				 * 按照水平流(默认是从左向右的流向)X轴偏移
+				 * 按照垂直流(默认是从上往下的流向)Y轴偏移
+				 * 	0是中心点：可以大概理解为当前元素的中垂点
+				 * 	小于0： 相对中心点X轴向左偏移，Y轴向上偏移
+				 * 	大于0： 相对中心店X轴向右偏移，Y轴向下偏移
+				 *  
+				 * 	blur： 模糊距离，相对于元素盒子边缘，内外各占一半，eg：10px 向外模糊5px，向内模糊5px
+				 * 
+				 * */
+				text-shadow: 5px 5px 4px #06ef;
+			}
+			.text-shadow-n2 { /*实现文字毛玻璃效果*/
+				/*对字体实现透明*/
+				color: rgba(0,0,0,0);
+				text-shadow: 0 0 5px #000;
+			}
+			.text-shadow-n3 { /*文字外阴影效果*/
+				color: #fff;
+				text-shadow: 0 0 5px red;
+			}
+			.text-shadow-n4 { /*文字辉光效果*/
+				color: #fff;
+				text-shadow: 0 0 5px #fff,0 0 20px #fff,0 0 30px #00FFFF,0 0 50px #00FFFF;
+			}
+			.text-shadow-n5 {
+				font-weight: bold;
+				color: #fff;
+				/*与当前背景颜色相反*/
+				text-shadow: 1px 1px #000; 
+			}
+			.text-shadow-n6 { /*文字空心效果*/
+				color: #fff;
+				/*原理：阴影起到一个描线的作用*/
+				text-shadow: 0 0 1px #000;
+			}
+			.text-shadow-n7 {
+				/*文字3D效果*/
+				color: #ab2121;
+				/*控制3D阴影效果*/
+				text-shadow: -1px -1px rgba(216, 127, 16, 0.8), 
+							 -2px -2px rgba(216, 127, 16, 0.8),
+							 -3px -3px rgba(216, 127, 16, 0.8);
+			}
+			.text-shadow-n8 {
+				color: #fff;
+				font-weight: bold;
+				/*通过层层叠加(偏移+模糊度)的方式*/
+				text-shadow:0 0 4px #fefcc9,
+							2px -2px 6px #feec85,
+							-4px -4px 8px #ffae34,
+							4px -8px 10px #ec760c,
+							-4px -12px 12px #cd4606,
+							0 -16px 14px #973716,
+							2px -18px 18px #451b0e;
+		 
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<div class="mr-10">
+					<h4>绘制简单阴影</h4>
+					<span class="text-shadow-n1">绘制简单阴影</span>
+				</div>
+				<div class="mr-10">
+					<h4>文字毛玻璃效果</h4>
+					<span class="text-shadow-n2">文字毛玻璃效果</span>
+				</div>
+				<div class="mr-10">
+					<h4>文字外阴影效果</h4>
+					<span class="text-shadow-n3">文字外阴影效果</span>
+				</div>
+				<div class="mr-10">
+					<h4>文字辉光效果</h4>
+					<span class="text-shadow-n4">文字辉光效果</span>
+				</div>
+				<div class="mr-10">
+					<h4>文字雕刻效果</h4>
+					<span class="text-shadow-n5">文字雕刻效果</span>
+				</div>
+				<div class="mr-10">
+					<h4>文字空心效果</h4>
+					<span class="text-shadow-n6">文字空心效果</span>
+				</div>
+				<div class="mr-10">
+					<h4>文字3D效果</h4>
+					<span class="text-shadow-n7">文字3D效果</span>
+				</div>
+				<div class="mr-10">
+					<h4>文字火焰效果</h4>
+					<span class="text-shadow-n8">文字火焰效果</span>
+				</div>
+			</div>	
+		</div>
+	</body>
+</html>

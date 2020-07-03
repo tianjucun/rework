@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue attrs</title>
+    <style>
+        .own-input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <base-input 
+            @input="handleInput"
+            @focus="handleFocus"
+            :name="name"
+            :label="123" 
+            class="own-input"
+            type="password"
+        >
+        </base-input>
+    </div>
+    <script src="../../vue/vue.js"></script>
+    <script>
+        /**
+            $attrs: 会把组件传递来的属性（除style和class外）注入到$attrs中
+
+            该属性通常与inheritAttrs一起使用
+
+            $listeners: 存储从组件传递来的相关自定义事件
+
+        **/
+        const BaseInput = {
+            inheritAttrs: false,
+            props: ['label', 'value'],
+            computed: {
+                inputListeners () {
+                    let vm = this;
+                    return Object.assign({}, this.$listeners, {
+                        input (e) {
+                            return vm.$emit('input', e.target.value);
+                        }
+                    });
+                }
+            },
+            template: `
+                        <label>
+                            {{label}}
+                            <input 
+                                v-bind="$attrs"
+                                v-on="inputListeners"
+                                :value="value"
+                            />
+                        </label>
+                        `
+        };
+        new Vue({
+            el: "#root",
+            components: {
+                BaseInput
+            },
+            data: {
+                name: "baseInputer"
+            },
+            methods: {
+                handleInput (val) {
+                    console.log(val)
+                },
+                handleFocus () {
+                    console.log("focus");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

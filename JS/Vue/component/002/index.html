@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model 的原理</title>
+</head>
+<body>
+    <div id="root">
+        <h1>v-model</h1>
+        <input v-model="name"/> <span>{{name}}</span>
+        <h1>value属性 + input事件 实现 v-model</h1>
+        <input :value="name" @input="name = $event.target.value"/> <span>{{name}}</span>
+        <h1>组件化实现 v-model</h1>
+        <base-input v-model="name" @input.native="name = $event.target.value"></base-input>
+    </div>
+    <script src="../../vue/vue.js"></script>
+    <script>
+        Vue.component('BaseInput', {
+            props: {
+                cvalue: String
+            },
+            template: '<input :value="cvalue" />'
+        });
+        var app = new Vue({
+            el: "#root",
+            data: {
+                name: "zhangsan"
+            },
+            methods: {
+                handleInputValue: function() {
+
+                }
+            }
+        });
+    </script>
+</body>
+</html>

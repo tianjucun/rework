@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 指令</title>
+</head>
+<body>
+    <div id="root">
+        <form>
+            <input v-for="(item, key) in user" :key="key" v-model="user[key]"/>
+        </form>
+        <ul>
+            <li v-pre v-for="(item, key) in user" :key="key">{{key}}: {{user[key]}}</li>
+        </ul>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#root",
+            data: {
+                user: {
+                    name: "",
+                    age: 18,
+                    sex: ""
+                }
+            }
+        });
+    </script>
+</body>
+</html>

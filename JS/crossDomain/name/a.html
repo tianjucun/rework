@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>A</h1>
+    <iframe src="http://localhost:8083/c.html" id="iframe" onload="load()"></iframe>
+</body>
+<script>
+    let isLoaded = false;
+    let name;
+    /**
+     * 主要利用 window.name 不变的特性, 实现两个不同域页面间信息传递
+     */
+    function load() {
+        let iframe = document.getElementById("iframe");
+        if(!isLoaded) {
+            iframe.src = "http://localhost:8082/b.html";
+            isLoaded = true;
+        } else if(!name){
+            name = iframe.contentWindow.name;
+            console.log("c page window.name: ", name);
+            iframe.src = "http://localhost:8082/c.html";
+        }
+    }
+</script>
+</html>

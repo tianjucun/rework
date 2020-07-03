@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="childRoot">
+        <base-comp></base-comp>
+        <p>{{name}}</p>
+        <!-- <child-one :age="10"></child-one> -->
+    </div>
+    <script src="../../vue/vue.js"></script>
+    <script>
+        const BaseComp = {
+            props: {
+                age: Number
+            },
+            data () {
+                return {
+                    text: "123"
+                }
+            },
+            created () {
+                console.log("[BaseComp instance]: created");
+            },
+            mounted () {
+                console.log("[BaseComp instance]: mounted");
+            },
+            template: `
+                    <div>
+                        <span>{{age}}</span>
+                        <p>{{text}}</p>
+                    </div>    
+                    `
+        };
+        const ChildOne = Vue.extend(BaseComp);
+        // new Vue({
+        //     el: "#root",
+        //     data: {
+        //         text: 18
+        //     },
+        //     components: {
+                
+        //     }
+        // });
+        new ChildOne({
+            el: "#childRoot",
+            propsData: { // 会向父组件进行传值操作
+            },
+            props: { // 会覆盖父组件的props
+                age: { 
+                    type: Number,
+                    default: 20
+                }
+            },
+            data() {
+                return { // 会与父组件的data合并
+                    text: "hello world"
+                };   
+            },
+            created () {
+                console.log("[ChildOne instance]: created");
+            },
+            mounted () { // 会先执行父组件的生命周期函数，然后执行子组件的生命周期函数
+                console.log("[ChildOne instance]: mounted");
+            }
+        });
+    </script>
+</body>
+</html>

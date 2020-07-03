@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学border-radius</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.box-radius-n1 {  /* 从bottom开始，省略那个则与对角的值相等；从top开始，则与相邻的值相等*/
+				/*border-radius: 10px;*/
+				
+				/* top-left top-right bottom-right bottom-left */
+				/*border-radius: 10px 8px 6px 4px;*/ 
+				
+				/* top-left [top-right&bottom-left] bottom-right */
+				/*border-radius: 2px 6px 8px;*/
+				
+				/* [top-left&bottom-right] [top-right&bottom-left] */
+				/*border-radius: 6px 8px;*/
+				border-radius: 50%;
+			}
+			.box-radius-n2 { /* 以高作为半径 */
+				height: 50px!important;
+				/*border-radius: 50px 50px 0 0;*/ /* 上半圆 */
+				border-radius: 0 0 50px 50px; /* 下半圆 */
+			}
+			.box-radius-n3 { /** 以宽作为半径 **/
+				width: 50px!important;
+				/*border-radius: 0 50px 50px 0;*/ /* 右半圆 */
+				border-radius: 50px 0 0 50px; /*左半圆*/
+			}
+			.box-radius-n4 { /* 水平半径和垂直半径不相等 */
+				border-radius: 50px 50px / 25px 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<!-- 绘制圆形 -->
+				<div class="mr-10">
+					<h4>绘制圆形</h4>
+					<div class="child box-radius-n1"></div>	
+				</div>
+				<!-- 绘制实心上半圆 -->
+				<div class="mr-10">
+					<h4>绘制实心上半圆</h4>
+					<div class="child box-radius-n2"></div>	
+				</div>
+				<!-- 绘制实心左半圆 -->
+				<div class="mr-10">
+					<h4>绘制实心左半圆</h4>
+					<div class="child box-radius-n3"></div>	
+				</div>
+				<!-- 绘制水平方向与垂直方向不相等的圆 -->
+				<div class="mr-10">
+					<h4>绘制水平方向与垂直方向不相等的圆</h4>
+					<div class="child box-radius-n4"></div>	
+				</div>
+				<div class="mr-10">
+					<h4>参考图:</h4>
+					<img src="img/border-radius.PNG" />
+				</div>
+				<p class="mr-10 color-red"> 需要注意的: 使用百分比是相对于元素所占的width/height(包含padding+border) </p>
+			</div>	
+		</div>
+	</body>
+</html>

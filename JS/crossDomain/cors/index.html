@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CORS 实现跨域</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let xhr = new XMLHttpRequest();
+    document.cookie = "name=tjc";
+    // 必须带上数据凭证
+    xhr.withCredentials = true;
+    // xhr.open("GET", "http://localhost:8083/getData", true);
+    xhr.open("PUT", "http://localhost:8083/getData", true);
+    xhr.setRequestHeader("name", "tjc");
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4) {
+            if(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                console.log("cros: ", xhr.response);
+                // 默认情况下, 在进行 CORS 请求时, getResponseHeader 方法只可以拿到六个字段
+                // Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma
+                console.log("name: ", xhr.getResponseHeader("name"));
+            }
+        }   
+    }
+    xhr.onerror = function(e) {
+     console.log("error: ", e);   
+    }
+    xhr.send(null);
+</script>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单元素组件的过渡</title>
+    <style>
+        /* v-enter-active */
+        .slide-fade-enter-active {
+            transition: all 30s ease;
+        }
+
+        .slide-fade-leave-active {
+            /* transition: all 5s cubic-bezier(1.0, 0.5, 0.8, 1.0); */
+            /* transition-delay: 10s; */
+            /* animation: bounce-in 5s reverse; */
+            transition: all 30s ease;
+        }
+
+        /* .slide-fade-enter, .slide-fade-leave-to{
+            transform: translateX(10px);
+            opacity: 0;
+        } */
+        .slide-fade-enter {
+            transform: translateX(100px);
+            /* opacity: 0; */
+        }
+        .slide-fade-enter-to {
+            transform: translateY(100px);
+        }
+
+        /* .slide-fade-leave {
+            color: red;
+        }
+
+        .slide-fade-leave-active {
+            color: blue;
+        }
+
+        .slide-fade-leave-to {
+            color: yellow;
+        } */
+        .slide-fade-leave {
+            transform: translateY(100px);
+            /* color: red;
+            font-size: 100px; */
+           
+        }
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .slide-fade-leave-to {
+            transform: translateX(100px);
+        }
+        .word {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div id="example1">
+            <button @click="show = !show">Toggle render</button>
+            <!-- v-on:before-enter="beforeEnter" 
+                        v-on:enter="enter"
+                        v-on:after-enter="afterEnter" 
+                        v-on:enter-cancelled="enterCancelled" 
+
+                        v-on:before-leave="beforeLeave"
+                        v-on:leave="leave" 
+                        v-on:after-leave="afterLeave" 
+                        v-on:leave-cancelled="leaveCancelled" -->
+            <transition appear name="slide-fade">
+                <p class="word" v-if="show">hello</p>
+            </transition>
+        </div>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#root",
+            data: {
+                show: true
+            },
+            methods: {
+                // --------
+                // 进入中
+                // --------
+
+                beforeEnter: function (el) {
+                    // ...
+                    console.log("beforeEnter");
+                },
+                // 当与 CSS 结合使用时
+                // 回调函数 done 是可选的
+                enter: function (el, done) {
+                    // ...
+                    console.log("enter");
+                    done()
+                },
+                afterEnter: function (el) {
+                    // ...
+                    console.log("afterEnter");
+                },
+                enterCancelled: function (el) {
+                    // ...
+                    console.log("enterCancelled");
+                },
+
+                // --------
+                // 离开时
+                // --------
+
+                beforeLeave: function (el) {
+                    // ...
+                    console.log("beforeLeave");
+                },
+                // 当与 CSS 结合使用时
+                // 回调函数 done 是可选的
+                leave: function (el, done) {
+                    // ...
+                    console.log("leave");
+                    done()
+                },
+                afterLeave: function (el) {
+                    // ...
+                    console.log("afterLeave");
+                },
+                // leaveCancelled 只用于 v-show 中
+                leaveCancelled: function (el) {
+                    // ...
+                    console.log("leaveCancelled");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

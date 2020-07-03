@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>简单布局-水平垂直居中</title>
+		<style>
+			.container {
+				width: 50%;
+				margin: 0 auto;
+			}
+			.container  > div[class^="box"]{
+				width: 200px;
+				height: 48px;
+				background-color: #CCCCCC;
+			}
+			.box{
+				text-align: center;
+				line-height: 3em;
+			}
+			
+			.box2 {
+				text-align: center;
+				font-size: 0;
+			}
+			.box2 > .item {
+				font-size: 16px;
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.box2 > .wrapper {
+				display: inline-block;
+				height: 100%;
+				vertical-align: middle;
+			}
+			
+			.box3 {
+				display: table-cell;
+				/*text-align: center; /** 适用于行级元素 **/
+				/*margin: 0 auto; /** 适用于块级元素 **/
+				vertical-align: middle;
+			}
+			.box3 > .item {
+				display: table;
+				margin: 0 auto;
+			}
+			
+			.box4 {
+				font-size: 0;
+				min-height: 150px;
+				line-height: 150px;
+				text-align: center;
+			}
+			.box4 > img.item {
+				vertical-align: middle;
+			}
+			
+			.box5 {
+				min-height: 150px;
+				background: url(img/background.jpg) center no-repeat;
+			}
+			
+			.box6 {
+				position: relative;
+			}
+			.box6 > .item {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				width: 4em;
+				line-height: 1;
+				height: 1em;
+				margin: auto;
+			}
+			
+			.box7 {
+				position: relative;
+			}
+			.box7 .item {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%,-50%);
+				transform: translate(-50%,-50%);
+			}
+			
+			.box8 {
+				position: relative;
+			}
+			.box8 > .item {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 4em;
+				line-height: 1;
+				height: 1em;
+				margin-left: -2em;
+				margin-top: -.5em;
+			}
+			.box9 {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				/*justify-content: center;*/
+				/*align-items: center;*/
+			}
+			.box9 > .item {
+				margin: auto;
+			}
+			
+			.box10 {
+				position: relative;
+			}
+			.box10 > .item {
+				position: absolute;
+				top: calc(50% - .5em);
+				left: calc(50% - 2em);
+				height: 1em;
+				line-height: 1;
+			}
+			
+			.box11 {
+				writing-mode: vertical-lr;
+				text-align: center;
+			}
+			.box11 > .wrapper {
+				writing-mode: horizontal-tb;
+				display: inline-block;
+				text-align: center;
+				width: 100%;
+			}
+			.box11 > .wrapper > .item {
+				display: inline-block;
+				margin: auto;
+				text-align: left;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+        	text-align
+        	line-height
+        	vertical-align
+        	margin
+        	absolute
+        	负margin
+        	wrtting-mode
+        	calc
+        	flex
+        	grid
+        -->
+		<div class="container">
+			<!---
+            	text-align + line-height
+            -->
+			<h3>text-align + line-height</h3>
+			<div class="box">
+				<div class="item">我居中了</div>
+			</div>
+			<h3>text-align + vertical-align</h3>
+			<div class="box2">
+				<div class="item">我居中了</div>
+				<i class="wrapper"></i>
+			</div>
+			<h3>text-align + table-cell</h3>
+			<div class="box3">
+				<div class="item">我居中了</div>
+			</div>
+			<h3>text-align + img(vertical-align + line-height)</h3>
+			<div class="box4">
+				<img class="item" src="img/background.jpg" />
+			</div>
+			<h3>background + img</h3>
+			<div class="box5"></div>
+			<!--
+            	ansolute
+            -->
+            <h3>absolute</h3>
+            <div class="box6">
+            	<div class="item">我居中了</div>
+            </div>
+            
+            <h3>absolute + translate</h3>
+            <div class="box7">
+            	<div class="item">我居中了</div>
+            </div>
+            
+            <h3>absolute  + 负margin</h3>
+            <div class="box8">
+            	<div class="item">我居中了</div>
+            </div>
+            
+            <h3>flex</h3>
+            <div class="box9">
+            	<div class="item">我居中了</div>
+            </div>
+            
+            <!--
+            	absolute + calc
+            -->
+            <h3>absolute + calc</h3>
+            <div class="box10">
+            	<div class="item">我居中了</div>
+            </div>
+            
+            <h3>writing-mode</h3>
+			<div class="box11">
+				<div class="wrapper">
+					<div class="item">我居中了</div>	
+				</div>
+			</div>
+		</div>
+		
+	</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>三列自适应布局</title>
+		<style>
+			.container {
+				width: 50%;
+				margin: 0 auto;
+			}
+			
+			.left {
+				background-color: #FF0000;
+			}
+			
+			.center {
+				background-color: #008000;
+			}
+			
+			.right {
+				background-color: #0000FF;
+			}
+			
+			.box {
+				overflow: hidden;
+				zoom: 1;
+			}
+			
+			.box>.left,
+			.box>.center {
+				float: left;
+				margin-right: 20px;
+			}
+			
+			.box>.right {
+				overflow: hidden;
+			}
+			/** table **/
+			
+			.box2 {
+				display: table;
+				width: 100%;
+			}
+			.box2 > div {
+				display: table-cell;
+			}
+			.box2>.left-wrapper,
+			.box2 > .center-wrapper {
+				width: 0.1%;
+			}
+			.box2 > .left-wrapper > .left,
+			.box2 > .center-wrapper > .center {
+				margin-right: 20px;
+			}
+			
+			
+		</style>
+
+	</head>
+
+	<body>
+		<div class="container">
+			<!--
+            	float + margin
+            -->
+			<div class="box">
+				<h3>float + margin</h3>
+				<div class="left">
+					<p>leftleftleftleftleftleftleftleftleftleft</p>
+				</div>
+				<div class="center">
+					<p>centercentercentercentercenter</p>
+				</div>
+				<div class="right">
+					<p>
+						rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright
+					</p>
+				</div>
+			</div>
+			<h3>table</h3>
+			<div class="box2">
+				<div class="left-wrapper">
+					<div class="left">
+						<p>leftleftleftleftleftleftleftleftleftleft</p>
+					</div>
+				</div>
+				<div class="center-wrapper">
+					<div class="center">
+						<p>centercentercentercentercenter</p>
+					</div>
+				</div>
+
+				<div class="right">
+					<p>
+						rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</body>
+
+</html>

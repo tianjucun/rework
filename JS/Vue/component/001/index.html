@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <ul>
+
+            <row ref="row1" @change="handleChange" :num="1"></row>
+            <row ref="row2" @change="handleChange" :num="2"></row>
+        </ul>
+        <p>{{total}}</p>
+    </div>
+    <script src="../../vue/vue.js"></script>
+    <script>
+        /**
+         *  1. 解析 DOM 模板时的注意事项
+         * 
+         *  2. 组建中 data 必须是一个函数
+         * 
+         *  3. ref 的使用
+         *  
+         */
+
+        Vue.component('Row', {
+            props: ['num'],
+            data: function() {
+                return {
+                    selfNum: this.num
+                }
+            },
+            template: '<li @click="handleRowClick"><span>{{selfNum}}</span></li>',
+            methods: {
+                handleRowClick: function() {
+                    this.selfNum++;
+                    this.$emit('change', 1);
+                }
+            }
+        
+        }); 
+         
+        var app = new Vue({
+            el: "#root",
+            data: {
+                total: 3
+            },
+            methods: {
+                handleChange: function(step) {
+                    var refs = this.$refs;
+                    // console.log(refs.row1.selfNum, refs.row2.selfNum);
+                    // this.total = refs.row1.selfNum + refs.row2.selfNum;
+                    this.total += step;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

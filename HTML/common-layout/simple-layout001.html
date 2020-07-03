@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>简单布局-两端对齐</title>
+		<style>
+			.container {
+				width: 50%;
+				margin: 0 auto;
+			}
+			.bgr_r {
+				background-color: #FF0000;
+			}
+			.bgr_g {
+				background-color: #008000;
+			}
+			.bgr_b {
+				background-color: #0000FF;
+			}
+			.bgr_c {
+				background-color: #ccc;
+			}
+			.container > div[class^="box"] {
+				width: 200px;
+				background-color: #ccc;
+			}
+			/** 通过flex **/
+			.box {
+				/*width: 200px;*/
+				/*display: flex;*/
+				/*justify-content: space-between;*/
+			}
+			.display_flex {
+				display: -webkit-box; /** 兼容Chrome 4+ **/
+				display: -moz-box; /** 向下兼容Firefox 17- **/
+				display: -webkit-flex; /** 向上兼容 Chrome 21+ **/
+				display: -moz-flex; /** Firefox 18+ **/
+				display: -ms-flexbox; /** 兼容 IE10 **/
+				display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */  
+			}
+			.flex_space-between {
+				-webkit-box-pack: justify;
+				-ms-flex-pack: justify;
+				-webkit-justify-content: space-between;
+				justify-content: space-between;
+			}
+			
+			/** 通过text-align的方式 **/
+			.box2 {
+				/*width: 200px;*/
+				text-align: justify;
+				text-align-last: justify;
+			}
+			.box2 div.item {
+				display: inline-block;
+				*display: inline;
+				zoom: 1;
+			}
+			
+			/** 通过text-align + after **/
+			.box3 {
+				height: 21px; /** 需要计算高度 **/
+				text-align: justify;
+				overflow: hidden;
+			}
+			.box3 > div.item {
+				display: inline-block;
+				*display: inline;
+				zoom: 1;
+			}
+			.box3::after {
+				content: '';
+				display: inline-block;
+				width: 100%;
+
+			}
+			/** 通过负margin **/
+			.box4 {
+				min-width: 210px;
+			}
+			.box4 > .wrapper {
+				overflow: hidden;
+				margin-right: -30px;
+			}
+			.box4 > .wrapper > div.item {
+				margin-right: 30px;
+				width: 50px;
+				float: left;
+			}
+			/** 通过column方式 **/
+			.box5 {
+				column-count: 3;
+				-webkit-column-count: 3;
+				-moz-column-count: 3;
+				/** 添加竖线 **/
+				column-rule: solid 1px #fff;
+				-webkit-column-rule: solid 1px #fff;
+				-moz-column-rule: solid 1px #fff;
+			}
+			/** 文字两端对齐 **/
+			.box6 > div.item {
+				width: 70px;
+				min-width: 70px;
+				text-align: justify;
+			}
+			.box6 > div.item::after {
+				content: '';
+				width: 100%;
+				display: inline-block;
+			}
+			.box7 {
+				height: 50px;
+				min-width: 525px;
+				text-align: justify;
+				overflow: hidden;
+				background-color: #fff!important;
+			}
+			.box7 > div.item {
+			    padding-bottom: 4px;
+			    line-height: 1.5;
+				display: inline-block;
+				transition: border,opacity .3s,.5s ease-in-out;
+				opacity: .5;
+			}
+			.box7 > div.item:hover {
+				opacity: 1;
+				cursor: pointer;
+				border-bottom: solid 3px #00ffff;
+			}
+			.box7::after {
+				content: '';
+				width: 100%;
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+        	实现两端对齐布局的要点在于
+        	确定一行显示的数量,确定所有item的宽为等宽。
+        	如果严格考虑兼容性的话，可以通过JS计算 + margin实现两边对齐
+       		适用于纯文字或者纯图片的布局，不用去计算margin距
+        -->
+		<div class="container">
+			<!--
+            	通过flex方式实现
+            	考虑兼容性 : 整体考虑IE9-不支持
+            	此布局适合移动端,小程序等。
+            -->
+            <h3>通过flex</h3>
+			<div class="box bgr_c display_flex flex_space-between">
+				<div class="item bgr_r">item1</div>
+				<div class="item bgr_g">item2</div>
+				<div class="item bgr_b">item3</div>
+			</div>
+			
+			<!--
+            	通过text-align: justify;
+            	这种方式需要元素为行内元素。
+            	元素之间并且得有空白符（包括空格、换行符、制表符）才起作用。
+           		兼容性： Safari、IOS、android4.4- 浏览器不支持
+            -->
+			<h3>通过text-align</h3>
+			<div class="box2">
+				<div class="item bgr_r">item1</div>
+				<div class="item bgr_g">item2</div>
+				<div class="item bgr_b">item3</div>
+			</div>
+			
+			<!--
+				推荐方式：
+				通过after伪元素来解决上面兼容性的问题
+				唯一不好的就是：父元素得定高
+				关于兼容性方面： 所有主流浏览器都支持
+				对于要兼容IE6/7的可以通过hack的方式来兼容
+			-->
+			<h3>通过after + text-align</h3>
+			<div class="box3">
+				<div class="item bgr_r">item1</div>
+				<div class="item bgr_g">item2</div>
+				<div class="item bgr_b">item3</div>
+			</div>
+			
+			<!--
+				通过负margin实现两端对齐布局
+				缺点： 需要计算margin距,然后通过负margin来撑开wrapper,
+				需要确定父盒子的宽度
+			-->
+			<h3>通过负margin</h3>
+			<div class="box4">
+				<div class="wrapper">
+					<div class="item bgr_r">item1</div>
+					<div class="item bgr_g">item2</div>
+					<div class="item bgr_b">item3</div>
+				</div>
+			</div>
+			<!--
+				column 实现
+				兼容性：IE9-不支持
+			-->
+			<h3>通过column方式</h3>
+			<div class="box5">
+				<div class="item bgr_r">item1</div>
+				<div class="item bgr_g">item2</div>
+				<div class="item bgr_b">item3</div>
+			</div>
+			<!--
+				文字两端对齐布局
+			-->
+			<h3>文字两端对齐布局</h3>
+			<div class="box6">
+				<div class="item">姓名</div>
+				<div class="item">性别</div>
+				<div class="item">手机号码</div>
+				<div class="item">阳历出生日期</div>
+			</div>
+			
+			<h3>demo实例</h3>
+			<div class="box7">
+				<div class="item">QQ</div>
+				<div class="item">微信</div>
+				<div class="item">支付宝</div>
+				<div class="item">Keep</div>
+				<div class="item">网易云音乐</div>
+			</div>
+		</div>
+	</body>
+</html>

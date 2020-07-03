@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>两列定宽一侧自适应</title>
+		<style>
+			.container {
+				width: 50%;
+				margin: 0 auto;
+			}
+			
+			.left {
+				background-color: #FF0000;
+			}
+			
+			.center {
+				background-color: #008000;
+			}
+			
+			.right {
+				background-color: #0000FF;
+			}
+			
+			.box {
+				overflow: hidden;
+				zoom: 1;
+			}
+			
+			.box>.left,
+			.box>.center {
+				float: left;
+				width: 100px;
+				margin-right: 20px;
+			}
+			
+			.box>.right {
+				margin-left: 240px;
+			}
+			/** float + margin + calc **/
+			
+			.box2 {
+				overflow: hidden;
+				zoom: 1;
+			}
+			
+			.box2>div {
+				float: left;
+			}
+			
+			.box2>.left,
+			.box2>.center {
+				margin-right: 20px;
+				width: 100px;
+			}
+			
+			.box2>.right {
+				width: calc(100% - 240px);
+			}
+			/** float + BFC **/
+			
+			.box3 {
+				overflow: hidden;
+				zoom: 1;
+			}
+			
+			.box3>.left,
+			.box3>.center {
+				float: left;
+				width: 100px;
+				margin-right: 20px;
+			}
+			
+			.box3>.right {
+				overflow: hidden;
+			}
+			/** float + margin + fix ***/
+			.box4 {
+				overflow: hidden;
+				zoom: 1;
+			}
+			.box4 > div {
+				float: left;
+			}
+			.box4 > .left,
+			.box4 > .center {
+				width: 100px;
+				margin-right: 20px;
+			}
+			.box4 > .right-wrapper {
+				width: 100%;
+				margin-left: -240px;
+			}
+			.box4 > .right-wrapper > .right {
+				margin-left:240px ;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="container">
+			<!--
+            	float + margin
+            -->
+			<div class="box">
+				<h3>float + margin</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center">
+					<p>center</p>
+				</div>
+				<div class="right">
+					<p>
+						rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright
+					</p>
+				</div>
+			</div>
+
+			<!--
+            	float + margin + calc
+            -->
+			<div class="box2">
+				<h3>float + margin + calc</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center">
+					<p>center</p>
+				</div>
+				<div class="right">
+					<p>
+						rightrightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightrightright
+					</p>
+				</div>
+			</div>
+			<!-- 
+            	float + margin + overflow
+            -->
+			<div class="box3">
+				<h3>float + margin + overflow</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center">
+					<p>center</p>
+				</div>
+				<div class="right">
+					<p>
+						rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright
+					</p>
+				</div>
+			</div>
+			<!--
+				float + margin + fix
+            -->
+			<div class="box4">
+				<h3>float + margin + fix</h3>
+				<div class="left">
+					<p>left</p>
+				</div>
+				<div class="center">
+					<p>center</p>
+				</div>
+				<div class="right-wrapper">
+					<div class="right">
+						<p>
+							rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright rightrightrightrightrightrightrightrightright
+						</p>
+					</div>
+				</div>
+			</div>
+			
+			<!--
+            	inline
+            -->
+		</div>
+	</body>
+
+</html>

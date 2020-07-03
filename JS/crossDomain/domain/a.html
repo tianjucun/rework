@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A页面</title>
+</head>
+<body>
+    <h1>A</h1>
+    <iframe src="http://simple.core.cn:8082/b.html" id="frame" onload="load()"></iframe>
+</body>
+<script>
+    document.domain = "core.cn";
+    function load() {
+     console.log("通过domain获取二级域名不同的B页面值: ", frame.contentWindow.msg);   
+    }
+</script>
+</html>

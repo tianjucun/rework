@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Data</title>
+</head>
+<body>
+    <div id="root">
+        {{a}}
+        <span ref="domC" v-if="c">{{c.b}} {{c.c}}</span>
+        <span v-if="hasD">{{d}}</span>
+        <span v-if="user.b">{{user.a}} || {{user.b}} || {{user.c}} || {{user.f}}</span>
+        <ul>
+            <li v-for="item in items" :key="item">{{item}}</li>
+        </ul>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#root",
+            data: {
+                a: 1,
+                c: {},
+                hasD: false,
+                user: {
+                    a: "a"
+                },
+                items: [0, 1, 2, 3, 4, 5]
+            },
+            methods: {
+                sset () {
+                    this.$set(this.c, "b", "100");
+                    Vue.set(this.c, "c", "1000");
+                    // app.$set(this.c, "b", 1001);
+                    // this.$nextTick()
+                    this.$nextTick().then(() => {
+                        this.$refs.domC.style.color = "red";
+                    })
+                },
+                setD () {
+                    this.$set(this, "d", "20");
+                    this.hasD = true;
+                },
+                setUser() {
+                    // this.$set(this.user, "b", "b");
+                    // this.$set(this.user, "c", "c");
+                    // this.$set(this.user, "f", "F");
+                    // 为已绑定的对象添加多个新的属性时
+                    this.user = Object.assign({}, this.user, {
+                        b: "b",
+                        c: "c",
+                        f: "D"
+                    });
+                },
+                updItems (index = 0, val) {
+                    // Vue.set(this.items, index, val);
+                    // this.$set(this.items, index, val);
+                    // this.items.splice(index, 1, val);
+                },
+                updItemLen (len) { // 因为splice会该Bain原数组
+                    this.items.splice(len);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

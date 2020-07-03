@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学transform</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.desc {
+				
+				/**
+				 * 文本溢出
+				 * 	
+				 * 
+				 */
+				
+			}
+			.wrapper {
+				border: solid #FF0000 1px!important;
+			}
+			.wrapper > .transform_matrix:hover {
+				/**
+				 * matrix(a,b,c,d,e,f)
+				 * a: scaleX
+				 * b: skewX
+				 * c: skewY
+				 * d: scaleY
+				 * e: translateX
+				 * f: translateY
+				 * Matrix()与translate()关系：translate(x,y)对应Matrix(1,0,0,1,x,y);
+				 * Matrix()与scale()关系：scale(x,y)对应Matrix(x,0,0,y,0,0);
+				 * Matrix()与rotate()关系：rotate(x)对应Matrix(cos(x),sin(x),-sin(x),cos(x),0,0)
+				 * Matrix()与skew()关系：skew(x,y)对应Matrix(1,tan(x),tan(y),1,0,0)
+				 */
+				transform: matrix(1,0,0,1,100,100);
+			}
+			
+			.transform_transform-origin:hover {
+				transform-origin: top left;
+				transform: rotate(45deg);
+			}
+			
+			
+			.transform_
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<div class="mr-10">
+					<h4>矩阵 matrix</h4>
+					<div class="child wrapper">
+						<div class="child transform_matrix">X:100,Y:100</div>
+					</div>
+				</div>
+				<div class="mr-10">
+					<h4>原点 transform-origin</h4>
+					<div class="child wrapper">
+						<div class="child transform_transform-origin"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

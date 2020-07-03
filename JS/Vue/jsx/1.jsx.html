@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue JSX</title>
+</head>
+<body>
+    <div id="root">
+        <list-comp :list="items" :render="render"></list-comp>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        
+        const ListCompFunctional = {
+            props: {
+                render: {
+                    type: Function
+                },
+                item: {
+                    type: String
+                }
+            },
+            render (h) {
+                return this.render(h, this.item);
+            }
+        }; 
+
+        const ListComp = {
+            props: {
+                list: {
+                    type: Array
+                },
+                render: {
+                    type: Function
+                }
+            },
+            components: {
+                ListCompFunctional
+            },
+            template: `
+                        <div>
+                            <template v-for='(item, index) in list'>
+                                <li v-if="!render" :key='index'>{{item}}</li>
+                                <list-comp-functional v-else :key='index' :render="render" :item="item">{{item}}</list-comp-functional>
+                            </template>
+                        </div>
+
+                      `
+        };
+        
+        new Vue({
+            el: "#root",
+            data: {
+                items: ["苹果", "梨", "香蕉"]
+            },
+            components: {
+                ListComp
+            },
+            methods: {
+                render (h, data) {
+                    return h('h1', data);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

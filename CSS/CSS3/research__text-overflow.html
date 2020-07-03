@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学text-overflow</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.desc {
+				
+				/**
+				 * 文本溢出
+				 * 	
+				 * 
+				 */
+				
+			}
+			.text-overflow-n1 {
+				white-space: nowrap;
+				/*word-break: keep-all;*/
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			.text-overflow-n2 {
+				width: 24em!important;
+				height: 1.3em!important;
+				overflow: hidden;
+				zoom: 1;
+			}
+			.text-overflow-n2 .text_con {
+				float: left;
+				height: 1.3em;
+				margin-right: 3em;
+				overflow: hidden;
+			}
+			.text-overflow-n2 .text_dotted {
+				width: 3em;
+				height: 1.31em;
+				/*显示为包裹性*/
+				float: right; 
+				margin-top: -1.3em;
+			}
+			.text-overflow-n3 { /* 只适合webkit浏览器：多行文本溢出解决方案 */
+				display: -webkit-box;
+				/*控制行数,5就是显示5行*/
+			    -webkit-line-clamp: 5; 
+			    -webkit-box-orient: vertical;
+			    overflow: hidden;
+			    line-height: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<div class="mr-10">
+					<h4>文本溢出处理</h4>
+					<div class="child text-overflow-n1">
+						The kind of rain that gushes over the top of rain gutters, so much in a hurry to hit the Earth, it has no time to flow down the spout.
+					</div>
+				</div>
+				<div class="mr-10">
+					<h4>margin负值定位法对文字溢出进行处理</h4>
+					<div class="child text-overflow-n2">
+						<div class="text_con">
+							The kind of rain that gushes over the top of rain gutters, so much in a hurry to hit the Earth, it has no time to flow down the spout.
+						</div>
+						<div class="text_dotted">...</div>
+					</div>
+				</div>
+				<div class="mr-10">
+					<h4>margin负值定位法对文字溢出进行处理</h4>
+					<div class="child text-overflow-n3">
+							The kind of rain that gushes over the top of rain gutters, so much in a hurry to hit the Earth, it has no time to flow down the spout.
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS3-重学background</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.desc {
+				
+				/**
+				 * background: 设置背景图
+				 * 
+				 * 		CSS2.1 支持的属性：
+				 * 			background-color => 背景颜色
+				 * 			background-image => 背景图片
+				 * 			background-repeat => 是否平铺
+				 * 			background-attachment => 决定背景图的位置是在视口内固定还是跟随包含它的区块一起滚动
+				 * 			background-position => 背景图的位置
+				 * 		
+				 * 		CSS3支持的属性：
+				 * 			background-origin => 指定背景图定位在那个盒子里
+				 * 			background-clip => 指定背景图相对背景区域剪裁的位置
+				 * 			background-size => 控制背景图的大小
+				 * 		
+				 * 		属性的缩写需要注意的点：
+				 * 			[background-size] 必须紧跟在 [background-position]后,并通过 "/" 划分,否则不会生效
+				 * 			指定多个背景层时,使用逗号分割每个背景层
+				 * 			
+				 */
+			}
+			.background-image {
+				background-image: url('img/background.jpg');
+				background-repeat: no-repeat;
+			}
+			.background-position { 
+				/*
+				 * 
+				 * CSS2.1 通过修改水平或垂直位置来决定背景图相对元素的位置
+				 * 相对于左上角
+				 * */
+				/* * (x,y) = (10,10) */
+				/*background-position: 10px 10px;*/ 
+				
+				/*background-position: top left;*/
+				
+				/**
+				 * 百分比的计算公式：
+				 * 		percentX = (containerWidth - imageWidth) * percentX
+				 * 		percentY = (containerHeight - imageHeight) * percentY
+				 	当图片的宽高恰好等于容器的宽高时,则下面的代码没有任何偏移效果
+				 	这样计算的好处：背景图永远不会移出容器,只会出现两种情况：铺满或者没有铺满
+				 * */
+				/*background-position: 25% 75%;*/ 	
+				
+				/**
+				 * 验证上面的规则
+				 * width: 120px;
+				 * height: 120px;
+				 * X:25%
+				 * Y:75%
+				 * 则最终偏移的效果(x,y) = (5,15)
+				 */
+				width: 120px!important;
+				height: 120px!important;
+				background-position: 25% 75%;
+				
+				/**
+				 * 关键字：top,right,bottom,left
+				 * 		
+				 * 		left top => X:0% y:0%
+				 * 		left center => X:0% y:50%
+				 * 		left bottom => x:0% y:100%
+				 * 		
+				 * 		right top => X:100% y:0%
+				 * 		right center => X:100% y:50%
+				 * 		right bottom => X:100% y:100%
+				 * 
+				 * 		下面的写法其实是CSS3新有的写法：相对那个边增加多少百分比(偏移多少百分比)
+				 */
+				background-position: left 25% top 75%;
+			}
+			
+			.background-color { /* color 与image同在 */
+				background-color: #00FFFF;
+				background-position: 0 50px;
+			}
+			
+			.background-attachment {
+				overflow: auto;
+				/**
+				 * 相对于浏览器视口重新定位,背景不会随着元素内容滚动
+				 */
+				background-attachment: fixed;
+				/**
+				 * 背景跟随元素的内容滚动
+				 */
+				background-attachment: local;
+				/**
+				 * 默认值
+				 * 背景与内容绑定到一块。相对于元素本身固定。
+				 */
+				background-attachment: scroll;
+			}
+			
+			.background-box { /*指定指定背景图定位在那个盒子里*/
+				display: inline-block;
+				padding: 20px;
+				/*表示padding-box的颜色*/
+				background-color: rgba(86, 204, 170,.8); 
+				/*表示border-box的颜色*/
+				border: solid 20px rgba(243, 150, 107,.8) !important;
+			}
+			.background_content-box {	
+				width: 100%;
+				height: 100%;
+				/*近似表示content-box的颜色*/
+				background-color: rgba(144, 202, 249,.8);
+			}
+			.background-origin_border-box {
+				background-origin: border-box!important;
+			}
+			.background-origin_content-box {
+				background-origin: content-box!important;
+			}
+			
+			.background-clip_padding-box {
+				background-clip: padding-box;
+			}
+			.background-clip_content-box {
+				background-clip: content-box;
+			}
+			
+			.background-size { /*控制背景图的大小*/
+				/*使用长度来设置
+				 	width: 10px;
+				 	height: 20px;
+				 * */
+				/*background-size: 10px 20px;*/
+				
+				/**
+				 * 使用百分之设置背景图大小
+				 * 	width: 10%;
+				 *  height: 20%;
+				 */
+				/*background-size: 10% 20%;*/
+				
+				/**
+				 * 使用关键字来者之背景图大小
+				 *  contain: 将图片等比例比例缩放,保证最长的边可以完全显示(但是会有多余空白空间)
+				 */
+				width: 150px!important;
+				height: 50px!important;
+				background-size: contain;
+				
+				/**
+				 * cover： 将图片等比例缩放以填满所有容器,不保证图片一定可以展示完整
+				 */
+				width: 200px!important;
+				height: 200px!important;
+				background-size: cover;
+				/**
+				 * 简写
+				 * position/size
+				 */
+				background: url(img/background.jpg) left center / 50% 75% no-repeat;
+			}
+
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			展示框
+			<div class="box">
+				<div class="mr-10">
+					<h4>简单的背景图</h4>
+					<div class="child background-image"></div>
+				</div>
+				<div class="mr-10">
+					<h4>背景图位置偏移</h4>
+					<div class="child background-image background-position"></div>
+				</div>
+				<div class="mr-10">
+					<h4>背景与背景色同在</h4>
+					<div class="child background-image background-color"></div>
+				</div>
+				<div class="mr-10">
+					<h4>背景图与滚动</h4>
+					<div class="child background-image background-attachment">
+						The kind of rain that gushes over the top of rain gutters, so much in a hurry to hit the Earth, it has no time to flow down the spout.
+					</div>
+				</div>
+				<div class="mr-10">
+					<h4>背景图的起始位置(borderBox=>paddingBox(默认)=>contentBox)</h4>
+					<!-- border-box -->
+					<div class="child background-image background-box background-origin_border-box" >
+						<div class="background_content-box"></div>
+					</div>
+					<!-- 默认padding-box -->
+					<div class="child background-image background-box" >
+						<div class="background_content-box"></div>
+					</div>
+					<!-- content-box -->
+					<div class="child background-image background-box background-origin_content-box" >
+						<div class="background_content-box"></div>
+					</div>
+				</div>
+				<div class="mr-10">
+					<h4>背景图(起始位置为border-box)的剪裁位置,padding=>content</h4>
+					<h6 class="color-red">注意：剪裁过程中,会将指定的剪裁位置的上一盒子连同背景图和颜色都会剪掉</h6>
+					<!-- border-box -->
+					<div class="child background-image background-box background-origin_border-box" >
+						<div class="background_content-box"></div>
+					</div>
+					<!-- 默认padding-box -->
+					<div class="child background-image background-box background-origin_border-box background-clip_padding-box" >
+						<div class="background_content-box"></div>
+					</div>
+					<!-- content-box -->
+					<div class="child background-image background-box background-origin_border-box background-clip_content-box" >
+						<div class="background_content-box"></div>
+					</div>
+				</div>
+				<div class="mr-10">
+					<h4>背景图的大小</h4>
+					<div class="child background-image background-size"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

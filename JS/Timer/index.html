@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container">
+        <ul id="ulDom"></ul>
+    </div>
+    
+</body>
+<script src="./rework/1.timer.js"></script>
+<script>
+    !function() {
+        var title = "防抖demo演示",
+            T,
+            delay;
+        function init(num = 1000) {
+            var ulDom = document.getElementById("ulDom");
+            var liListFrag = new DocumentFragment();
+            for(var i = 0; i < num; i++) {
+                var li = document.createElement("li");
+                li.textContent = title + i;
+                liListFrag.appendChild(li);
+            }
+            ulDom.appendChild(liListFrag);
+        }
+        function config(timeFn, delay, isDebounce, num) {
+            T = timeFn;
+            delay = delay;
+            title = isDebounce ? "防抖demo演示" : "节流demo演示";
+            init();
+        }
+        config(throttle, 1000, false);
+        window.addEventListener("scroll", T(() => {
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            console.log("[当前的scrollTop:] ", scrollTop);
+        }, 1000))
+    }();
+</script>
+</html>

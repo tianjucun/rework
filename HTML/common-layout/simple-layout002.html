@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>水平居中</title>
+		<style>
+			.container {
+				width: 50%;
+				margin: 0 auto;
+			}
+			.item {
+				background-color: #FF0000;
+			}
+			.container > div[class^="box"] {
+				width: 200px;
+				background-color: #CCCCCC;
+			}
+			.box {
+				text-align: center;
+			}
+			.box > .item {
+				display: inline-block;
+				*display: inline; /** 兼容IE7 **/
+				zoom: 1;
+			}
+			.box2 > .item {
+				/*width: 4em;*/
+				/*margin: 0 auto;*/
+				/*text-align: center;*/
+				
+				
+				display: table; /* 不兼容IE7- **/
+				margin: 0 auto;
+
+				/*width: 4em;*/
+				/*display: inline-block;*/
+				/*margin: 0 auto;*/
+			}
+			
+			.box3 {	
+				height: 1.3em;
+				position: relative;
+			}
+			.box3 > .wrapper {
+				position: absolute;
+				left: 50%;
+			}
+			.box3 > .wrapper > .item {
+				position: relative; /** 相对wrapper的50% **/
+				left: -50%;
+			}
+			
+			.box4 {
+				height: 1.3em;
+				position: relative;
+			}
+			.box4 > .item {
+				position: absolute;
+				left: 50%;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+			}
+			
+			.box5 {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				/*-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;*/
+				
+			}
+			.box5 > .item {
+				margin: 0 auto;
+			}
+			
+			.box6 {
+				height: 1.3em;
+				position: relative;
+			}
+			.box6 > .wrapper {
+				position: absolute;
+				left: 50%;
+			}
+			.box6 > .wrapper > .item {
+				width: 4em;
+				margin-left: -50%;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+        	水平居中
+        	Flex
+        	grid
+        	text-align
+        	margin: 0 auto;
+        	position: absolute; left: 50%;right:50%;
+        	
+        -->
+		<div class="container">
+			<!--
+				text-align
+				局限性： 只适应于inline-block元素
+			-->
+			<h3>通过 text-align</h3>
+			<div class="box">
+				<div class="item">我居中了</div>
+			</div>
+			<!--
+            	margin: 0 auto;
+            	可以使块级元素水平居中.
+            	
+            	只设置父元素,既可以让元素父元素与子元素整体水平居中
+            	可以设置子集元素为display:table; 
+            	table具有包裹性,宽度由内容撑开
+            -->
+			<h3>通过margin的方式</h3>
+			<div class="box2">
+				<div class="item">我居中了</div>
+			</div>
+			<!--
+            	absolute  + translateX
+            	兼容性： IE9- 浏览器不支持
+            	absolute + wrapper
+            	该方法通过增加html结构的方式,但是使用此方法不用考虑任何兼容
+            	absolute + 负margin
+            	通过增加html结构的方式：并且作了定宽处理
+            -->
+			<h3>通过absolute + wrapper 的方式</h3>
+			<div class="box3">
+				<div class="wrapper">
+					<div class="item">我居中了</div>	
+				</div>
+			</div>
+			<h3>通过absolute + translateX</h3>
+			<div class="box4">
+				<div class="item">我居中了</div>
+			</div>
+			<h3>通过absolute + wrapper + 负margin</h3>
+			<div class="box6">
+				<div class="wrapper">
+					<div class="item">我居中了</div>	
+				</div>
+			</div>
+			
+			<h3>通过flex</h3>
+			<div class="box5">
+				<div class="item">我居中了</div>
+			</div>
+		</div>
+	</body>
+</html>

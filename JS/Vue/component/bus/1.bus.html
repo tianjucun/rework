@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <child-one v-model="value" :name="name" @update:name="name=$event"></child-one>
+    </div>
+    <script src="../../vue/vue.js"></script>
+    <script>
+        const ChildOne = {
+            props: ["value", "name"],
+            methods: {
+                update () {
+                    this.$emit("update:name", "lisi");
+                }
+            },  
+            template: `
+                        <div>
+                            <p>{{value}}-{{name}}</p>
+                            <button @click="update">update</button>
+                        </div>
+
+                        `  
+        };
+        new Vue({
+            el: "#root",
+            data: {
+                value: 100,
+                name: "zhangsan"
+            },
+            components: {
+                ChildOne
+            }
+        });
+    </script>
+</body>
+</html>

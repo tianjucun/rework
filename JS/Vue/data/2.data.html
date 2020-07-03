@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Props</title>
+</head>
+<body>
+    <div id="root">
+        <user-info :age="5"></user-info>
+    </div>
+    <script src="../vue/vue.js"></script>
+    <script>
+        var UserInfo = {
+            props: {
+                age: {
+                    type: Number,
+                    default: 18, // 对象或数组的默认值必须从一个工厂函数返回
+                    required: true,
+                    validator (age) {
+                        // if(age < 18) throw new TypeError("age < 18");
+                        return age >= 18; // 返回false的话, 会抛出一个警告
+                    }
+                }
+            },
+            template: "<p>{{age}}</p>"
+        };
+        new Vue({
+            el: "#root",
+            data: {
+                age: 10
+            },
+            components: {
+                UserInfo
+            }
+        });
+    </script>
+</body>
+</html>
